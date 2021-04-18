@@ -5,25 +5,45 @@ The [MarsRoverApi](https://github.com/DavidK-Software/MarsRoverApi) project down
 
 # Overview
 
+## Application Projects
+
+The application is divided into the following projects.
+
+| Project | Description |
+| --- | ----------- |
+| MarsRoverApi | A web api application that serves information about Mars Rover Images |
+| NasaApiLib | An HttpClient library that makes calls to retrieve data from the  [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API) |
+| MarsRoverApi.Test | An xUnit test library for MarsRoverApi |
+| NasaApiLib.Test | An xUnit test library for NasaApiLib |
+
 ## Initialization
 
 The following is preformed on startup:
 
-1. Retrieving a list of rover information along with the cameras used on each rover from the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API).
+1. Retrievs a list of rover information along with the cameras used on each rover from the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API).
 	- The list of rovers with their associated cameras are saved in a database.
 	- Initialization of rover information is only done once at the beginning of the first start of the web api.
 2. Dates are read from a local file, one date at a time.
 	- The dates are validated as they are read.
-	- The service that reads the dates uses IEnumerable and yield, allowing the application to loop through the dates, readind only one date at a time and not needing to keep a list in memory.
+	- The service that reads the dates uses IEnumerable and yield, allowing the application to loop through the dates, reading only one date at a time and not needing to keep a list in memory.
 3. For each rover and date combination, the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API) is called.
-	- Calls to the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API) used paged retrieval accessing 25 items per call.
+	- Calls to the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API) use paged retrieval accessing 25 items per page.
 	- Information about each image is saved to a database.
 	- For each image, a call is made to the Nasa Image api to retrieve the image.
 	- Each image is saved locally in a file.
 
-## Api Available Endpoints
+## API
 
-| Endpoit | Description |
+This application is a web api. It provides api endpoints that can be called from client applications to retrieve data and images that have been retrieved from Nasa.
+
+An example of a client application can be found at the following:
+[MarsRoverAngularUi](https://github.com/DavidK-Software/MarsRoverAngularUI)
+
+### Endpoints
+
+#### Available Endpoints
+
+| Endpoint | Description |
 | --- | ----------- |
 | /api/Dates | Gets a list of dates |
 | /api/Rovers | Gets a list of rovers and associated cameras |
@@ -31,7 +51,7 @@ The following is preformed on startup:
 | /api/Rovers/{roverid}/photos/{earthdate}?page={page}&pagesize={pagesize}" | Gets a page of information about rover images for a given day. |
 | /api/Images/{imagePath}/{imageFileName} | Gets an image. This can be used in an html img tag. |
 
-### Example Queries
+#### Example Queries
 
 GET "http://localhost:8563/api/Dates"
 <br>
@@ -43,3 +63,24 @@ GET "http://localhost:8563/api/Rovers/5/photos/2017-02-27?page=1&pagesize=10"
 <br>
 GET "http://localhost:8563/api/Images/MarsRoverImages/FLB_541484941EDR_F0611140FHAZ00341M_.JPG"
 
+## Packages
+
+This project is written in C# using .Net Core 5.0.
+
+The following NuGet packages are used:
+
+[Microsoft.EntityFrameWorkCore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/)
+<br>
+Additional information can be found [here](https://docs.microsoft.com/en-us/ef/core/)
+<br>
+[Microsoft.EntityFrameWorkCore.Sqlite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/)
+<br>
+Additional information can be found [here](https://docs.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
+<br>
+[Swashbuckle.AspNetCore](https://www.nuget.org/packages/Swashbuckle.AspNetCore/)
+Additional information can be found [here](https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio)
+<br>
+[Automapper](https://www.nuget.org/packages/AutoMapper/)
+
+## License
+This project is licensed with the [MIT license](LICENSE).
