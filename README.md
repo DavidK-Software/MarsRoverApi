@@ -20,7 +20,7 @@ The application is divided into the following projects.
 
 The following is preformed on startup:
 
-1. Retrievs a list of rover information along with the cameras used on each rover from the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API).
+1. Retrieves a list of rover information along with the cameras used on each rover from the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API).
 	- The list of rovers with their associated cameras are saved in a database.
 	- Initialization of rover information is only done once at the beginning of the first start of the web api.
 2. Dates are read from a local file, one date at a time.
@@ -31,12 +31,13 @@ The following is preformed on startup:
 	- Information about each image is saved to a database.
 	- For each image, a call is made to the Nasa Image api to retrieve the image.
 	- Each image is saved locally in a file.
+	- Initialization of Mars Rover photo images is only done once at the beginning of the first start of the web api. Data that has already been saved is not retrieved from Nasa again.
 
 ## API
 
-This application is a web api. It provides api endpoints that can be called from client applications to retrieve data and images that have been retrieved from Nasa.
+This application is a Web Api. It provides API endpoints that can be called from client applications to retrieve data and images that have been retrieved from Nasa.
 
-An example of a client application can be found at the following:
+An example of a client application that calls this API can be found at:
 [MarsRoverAngularUi](https://github.com/DavidK-Software/MarsRoverAngularUI)
 
 ### Endpoints
@@ -62,8 +63,26 @@ GET "http://localhost:8563/api/Rovers/5"
 GET "http://localhost:8563/api/Rovers/5/photos/2017-02-27?page=1&pagesize=10"
 <br>
 GET "http://localhost:8563/api/Images/MarsRoverImages/FLB_541484941EDR_F0611140FHAZ00341M_.JPG"
+## Coding Features Demonstrated
 
-## Packages
+- C#
+- .NET Core 5
+- Entity Framework Core 5
+	- EF Core Migrations
+	- Paged Query Results
+- Swagger
+- .NET Core Logging
+- xUnit Tests
+- JSon Serialization (for .NET Core 5)
+- HttpClient
+- yield keyword
+- File and Stream IO
+- Dependency Injection
+- CORS
+- SqlLite
+- Extension Methods
+
+## Nuget Packages
 
 This project is written in C# using .Net Core 5.0.
 
@@ -72,15 +91,16 @@ The following NuGet packages are used:
 [Microsoft.EntityFrameWorkCore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/)
 <br>
 Additional information can be found [here](https://docs.microsoft.com/en-us/ef/core/)
-<br>
+<br><br>
 [Microsoft.EntityFrameWorkCore.Sqlite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/)
 <br>
 Additional information can be found [here](https://docs.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
-<br>
+<br><br>
 [Swashbuckle.AspNetCore](https://www.nuget.org/packages/Swashbuckle.AspNetCore/)
 Additional information can be found [here](https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio)
-<br>
+<br><br>
 [Automapper](https://www.nuget.org/packages/AutoMapper/)
+Documentation about automapper can be found at the [Automapper Office Website](https://automapper.org/)
 
 ## License
 This project is licensed with the [MIT license](LICENSE).
