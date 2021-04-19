@@ -102,5 +102,19 @@ Additional information can be found [here](https://docs.microsoft.com/en-us/aspn
 [Automapper](https://www.nuget.org/packages/AutoMapper/)
 Documentation about automapper can be found at the [Automapper Office Website](https://automapper.org/)
 
+## How to build and run
+
+Download or clone this repository.
+
+Note: The first time this application runs, it can take several minutes to load all the mars rover images from the [Nasa API portal](https://api.nasa.gov/?search=Mars+Rover+Photos+API).
+
+1. Open the solution in Visual Studio.
+2. Build the solution.
+3. Run the solution (either in debug or non-debug mode).
+
+The application will open in your browser using "http://localhost:8563".
+
+You can explore the Web API features using the Swagger page. "http://localhost:8563/swagger/index.html"
+
 ## License
 This project is licensed with the [MIT license](LICENSE).
