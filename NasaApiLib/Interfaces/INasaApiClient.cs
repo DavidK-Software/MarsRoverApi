@@ -11,7 +11,5 @@ namespace NasaApiLib.Interfaces
         Task<IList<NasaMarsPhoto>> GetRoverPhotosAsync(string roverName, string earthDate, int page);
 
         Task<byte[]> GetRoverPhotoAsync(string imgSrc);
-
-        Task<NasaMarsPhotos> TestGetRoverPhotosAsync(string roverName, string earthDate, int page);
     }
 }

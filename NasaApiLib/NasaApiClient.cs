@@ -46,42 +46,6 @@ namespace NasaApiLib
             return marsRovers;
         }
 
-        public async Task<NasaMarsPhotos> TestGetRoverPhotosAsync(string roverName, string earthDate, int page)
-        {
-            NasaMarsPhotos marsPhotos = null;
-
-            var uri = $"{_settings.NasaApiUrl}/{_settings.MarsRoverApi}/{roverName}/photos?earth_date={earthDate}&page={page}&api_key={_settings.NasaApiKey}";
-
-            _logger.LogInformation($"TestGetRoverPhotosAsync roverName: {roverName} earthDate: {earthDate} page:{page}");
-
-            var response = await _httpClient.GetAsync(uri);
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-
-                response.EnsureSuccessStatusCode();
-            }
-
-            var content = await response.Content.ReadAsStringAsync();
-            marsPhotos = JsonSerializer.Deserialize<NasaMarsPhotos>(content);
-
-            foreach (var marsPhoto in marsPhotos.Photos)
-            {
-                _logger.LogInformation($"GetRoverPhotoAsync Getting ImgSrc: {marsPhoto.ImgSrc}");
-
-                var response2 = await _httpClient.GetAsync(marsPhoto.ImgSrc);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-
-                byte[] image = await response.Content.ReadAsByteArrayAsync();
-                _logger.LogInformation($"GetRoverPhotoAsync Saving ImgSrc: {marsPhoto.ImgSrc}");
-            }
-
-            return marsPhotos;
-        }
-
         public async Task<IList<NasaMarsPhoto>> GetRoverPhotosAsync(string roverName, string earthDate, int page)
         {
             var uri = $"{_settings.NasaApiUrl}/{_settings.MarsRoverApi}/{roverName}/photos?earth_date={earthDate}&page={page}&api_key={_settings.NasaApiKey}";
